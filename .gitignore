@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Nix / direnv
+result
+result-*
+.nixenv
+.direnv/
+
+# Generated artefacts - reproduce with `make demo`
+data/raw/
+data/curated/
+outputs/
+*.db
+*.db-wal
+*.db-shm
+
+# OS
+.DS_Store
