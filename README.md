@@ -58,12 +58,15 @@ shape of IoT Core, Lambda, S3 and a relational tier, built against the filesyste
 
 The thesis document shows one screen of the dashboard it specified — *Figura 14, Dashboard
 EarthGuardian*. The code behind it stayed on campus with everything else; the design survived in
-the PDF. The console at the top of this page rebuilds it: the palette is sampled from the figure,
-the type is Work Sans, chosen to match its lettering, and each of the six menu items the figure
-lists keeps its layout — cards across the top, an analysis panel beside an insight panel, a strip
-of metrics, a column down the right.
+the PDF. The console rebuilds it: the palette is sampled from the figure, the type is Work Sans,
+chosen to match its lettering, and each of the six menu items the figure lists keeps its layout —
+cards across the top, an analysis panel beside an insight panel, a strip of metrics, a column down
+the right.
 
-![Figura 14 of the 2024 thesis](docs/original-2024/figura-14-dashboard.png)
+![The Overview page, rebuilt from Figura 14](assets/console-overview.jpg)
+
+*The Overview page as it runs today. The 2024 figure it rebuilds is kept in
+[`docs/original-2024/figura-14-dashboard.png`](docs/original-2024/figura-14-dashboard.png).*
 
 Where the figure had placeholders, the console has what the system knows. *Your weekly progress*
 becomes each crop's stage in its planting cycle. *Predictive analysis* becomes every plot's water
@@ -73,7 +76,7 @@ the node's own sensors recorded them.
 
 | Menu item | What it shows |
 |---|---|
-| **Overview** | the figure itself, above |
+| **Overview** | the figure itself, pictured above |
 | **Fields** | the soil-water trace against field capacity, refill point and wilting point; the irrigation plan, priced; the irrigation log |
 | **Sensors** | every channel the node reports, fourteen days of any of them, each part's noise and resolution, the latest uplinks |
 | **Analytics** | the drainage hinge that recovers field capacity, the score against the hidden soil, the ranked advisories |
