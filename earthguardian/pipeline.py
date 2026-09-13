@@ -77,7 +77,7 @@ class AnalysisResult:
         return pd.DataFrame(rows)
 
 
-def _irrigation_series(events: pd.DataFrame, dates: pd.Series, efficiency: float) -> np.ndarray:
+def applied_irrigation(events: pd.DataFrame, dates: pd.Series, efficiency: float) -> np.ndarray:
     """Daily depth that actually reached the soil, from the irrigation log.
 
     The log records what was pumped; the crop receives that times the system's
@@ -140,7 +140,7 @@ def analyse(
         # this is its own command log - the curated events table - and not the
         # simulator's hidden state.
         events = curated.read_frame("site_events", plot.plot_id)
-        applied = _irrigation_series(events, daily["date"], plot.irrigation_efficiency)
+        applied = applied_irrigation(events, daily["date"], plot.irrigation_efficiency)
 
         soil = estimate_soil_state(
             readings,

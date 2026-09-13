@@ -22,6 +22,10 @@ import numpy as np
 
 from earthguardian.config import Plot
 
+#: Irrigate once depletion reaches this share of the readily available water -
+#: just before the crop starts to feel it.
+TRIGGER_FRACTION_OF_RAW = 0.9
+
 
 @dataclass(slots=True)
 class IrrigationPlan:
@@ -59,7 +63,7 @@ def plan_irrigation(
 ) -> IrrigationPlan:
     """Decide whether to irrigate this plot, and by how much."""
     raw_mm = taw_mm * plot.crop_spec.depletion_fraction
-    trigger_mm = raw_mm * 0.9
+    trigger_mm = raw_mm * TRIGGER_FRACTION_OF_RAW
 
     headroom = max(trigger_mm - depletion_mm, 0.0)
     days_to_trigger = headroom / max(recent_etc_mm_day, 1e-6)

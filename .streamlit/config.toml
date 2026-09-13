@@ -1,14 +1,30 @@
+# Palette sampled from Figura 14 of the 2024 thesis document. The type is Work
+# Sans, matched to the figure's lettering (SIL OFL, bundled in
+# earthguardian/dashboard/static/ and served by static file serving).
 [theme]
-base = "dark"
-primaryColor = "#4ade80"
-backgroundColor = "#0d1117"
-secondaryBackgroundColor = "#161b22"
-textColor = "#e6edf3"
-font = "sans serif"
+base = "light"
+primaryColor = "#1a4c46"
+backgroundColor = "#fefcfd"
+secondaryBackgroundColor = "#e6f0e1"
+textColor = "#12332e"
+font = "Work Sans, sans-serif"
+
+[[theme.fontFaces]]
+family = "Work Sans"
+url = "app/static/WorkSans-Variable.ttf"
+weight = "100 900"
+style = "normal"
+
+[theme.sidebar]
+backgroundColor = "#1a4c46"
+secondaryBackgroundColor = "#305d49"
+textColor = "#f7ffe1"
+primaryColor = "#d4f0a1"
 
 [server]
 headless = true
 fileWatcherType = "none"
+enableStaticServing = true
 
 [browser]
 gatherUsageStats = false

@@ -5,14 +5,14 @@
 ![Python](https://img.shields.io/badge/python-3.11%20|%203.12%20|%203.13-3776ab)
 ![Nix flake](https://img.shields.io/badge/nix-flake-5277c3)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Tests](https://img.shields.io/badge/tests-65%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-70%20passing-brightgreen)
 
 Earth Guardian watches five environmental channels on a smallholder plot, reconstructs how much
 water the root zone is missing, and turns that into a depth, a date and a price. It simulates the
 crop, the weather, the soil physics, the sensors and the radio link, so the whole system runs from a
 `git clone` with no hardware, no cloud account and no network access.
 
-![Fleet](assets/console-fleet.jpg)
+![Overview](assets/console-overview.jpg)
 
 > **Origin.** This is an offline reconstruction of the author's 2024 undergraduate thesis at FIAP.
 > The project was built and demonstrated on campus using the university's own IoT hardware, and
@@ -54,6 +54,37 @@ surfaced through a dashboard and a mobile app.
 Everything above is implemented here. What is *not* implemented is AWS itself: the pipeline has the
 shape of IoT Core, Lambda, S3 and a relational tier, built against the filesystem.
 
+## The console: Figura 14, rebuilt
+
+The thesis document shows one screen of the dashboard it specified — *Figura 14, Dashboard
+EarthGuardian*. The code behind it stayed on campus with everything else; the design survived in
+the PDF. The console at the top of this page rebuilds it: the palette is sampled from the figure,
+the type is Work Sans, chosen to match its lettering, and each of the six menu items the figure
+lists keeps its layout — cards across the top, an analysis panel beside an insight panel, a strip
+of metrics, a column down the right.
+
+![Figura 14 of the 2024 thesis](docs/original-2024/figura-14-dashboard.png)
+
+Where the figure had placeholders, the console has what the system knows. *Your weekly progress*
+becomes each crop's stage in its planting cycle. *Predictive analysis* becomes every plot's water
+reserve over eight weeks, projected to the day it reaches the irrigation trigger. *It's the perfect
+day for spraying* becomes GAIA's actual call, and the weather column becomes the last four days as
+the node's own sensors recorded them.
+
+| Menu item | What it shows |
+|---|---|
+| **Overview** | the figure itself, above |
+| **Fields** | the soil-water trace against field capacity, refill point and wilting point; the irrigation plan, priced; the irrigation log |
+| **Sensors** | every channel the node reports, fourteen days of any of them, each part's noise and resolution, the latest uplinks |
+| **Analytics** | the drainage hinge that recovers field capacity, the score against the hidden soil, the ranked advisories |
+| **Reports** | the season under three irrigation policies, and the farmer briefing as a download |
+| **Devices** | airtime against the fair-use allowance, the link budget, uplinks delivered day by day |
+
+![Fields](assets/console-fields.jpg)
+
+The illustrated fruit characters of the original are not reproduced; line-art marks stand in for
+them.
+
 ## The plots
 
 Three real Brazilian locations, chosen so that soil, crop and radio each pull the decision a
@@ -73,7 +104,7 @@ LoRaWAN fair use allows a node **30 seconds of uplink airtime a day**. Time-on-a
 exponentially with spreading factor, and spreading factor is forced up by distance and terrain, so
 how often a plot can be measured is decided by the radio before agronomy gets a vote.
 
-![Radio](assets/console-radio.jpg)
+![Devices](assets/console-devices.jpg)
 
 | Plot | Link | Airtime per uplink | Uplinks/day | Daily airtime | Limited by |
 |---|---|---|---|---|---|
@@ -96,7 +127,7 @@ USDA-ARS).
 
 So it is recovered from the plot's own behaviour.
 
-![Self-calibration](assets/console-calibration.jpg)
+![Analytics](assets/console-analytics.jpg)
 
 On any day the profile is not being wetted, water leaves it two ways — the canopy transpires it or
 gravity drains it. GAIA already computes evapotranspiration from the temperature, humidity and
@@ -156,6 +187,8 @@ because of it.
 
 pH and air quality get their own advisory axes.
 
+![Sensors](assets/console-sensors.jpg)
+
 **Soil pH** is per crop, because coffee is not lettuce: below roughly 6.0 phosphorus binds to iron
 and aluminium and stops being available whatever is applied, and below 5.0 aluminium itself turns
 phytotoxic. Coffee wants 5.5–6.5 and would be damaged by liming it to a vegetable band.
@@ -168,7 +201,7 @@ dates; **all five were detected on the exact day, with no false positives.**
 
 ## What it is worth
 
-![Impact](assets/console-impact.jpg)
+![Reports](assets/console-reports.jpg)
 
 Three ways to decide when to irrigate, over the same year of weather with the same seed. The
 calendar policy is given a sensible interval, not a bad one — the alternative to this platform is
@@ -206,7 +239,7 @@ returned success would make the gateway look tested when it is not.
 ## Verifying any of this
 
 ```bash
-make test     # 65 tests
+make test     # 70 tests
 make lint     # ruff check + format --check
 make demo     # regenerates every number above
 make gif      # re-captures the console imagery (needs `nix develop .#media`)
@@ -229,10 +262,10 @@ earthguardian/
 ├── cloud/          AWS-shaped uplinks · document store · relational store · ingestion
 ├── gaia/           soil-state recovery · weather reconstruction · advisories
 ├── decisions/      irrigation scheduling · the counterfactual
-└── dashboard/      the console
+└── dashboard/      the console, rebuilt from the thesis's Figura 14
 firmware/           the Arduino sketch and the Raspberry Pi gateway
-docs/original-2024/ the thesis, the architecture diagram, the circuit
-tests/              65 tests
+docs/original-2024/ the thesis, the architecture diagram, the circuit, the dashboard figure
+tests/              70 tests
 ```
 
 ## Limitations
@@ -254,6 +287,7 @@ tests/              65 tests
 - [`docs/original-2024/EarthGuardianSystem_Doc_Final.pdf`](docs/original-2024/) — the 43-page document
 - [`docs/original-2024/earth_guardian_architecture_diagram.drawio`](docs/original-2024/) — the editable architecture diagram
 - [`docs/original-2024/earth_guardian_circuit_diagram.pdf`](docs/original-2024/) — the prototype schematic
+- [`docs/original-2024/figura-14-dashboard.png`](docs/original-2024/figura-14-dashboard.png) — the dashboard design, cropped from page 35 of the PDF
 
 ---
 

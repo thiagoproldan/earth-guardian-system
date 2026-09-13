@@ -26,8 +26,16 @@ from datetime import date
 import pandas as pd
 
 from earthguardian.config import PLOTS, Plot, get_settings
+from earthguardian.decisions.irrigation import TRIGGER_FRACTION_OF_RAW
 from earthguardian.edge.simulator import FieldSimulator, IrrigationPolicy
 from earthguardian.edge.soil import seasonal_yield_loss
+
+#: The three policies every plot is run under.
+POLICIES: dict[str, IrrigationPolicy] = {
+    "rainfed": IrrigationPolicy.rainfed(),
+    "calendar": IrrigationPolicy.calendar(7, 20),
+    "sensor": IrrigationPolicy.sensor_driven(TRIGGER_FRACTION_OF_RAW),
+}
 
 
 @dataclass(slots=True)
@@ -109,13 +117,8 @@ def run_impact_study(
     settings = get_settings()
     seed = settings.seed if seed is None else seed
 
-    policies = {
-        "rainfed": IrrigationPolicy.rainfed(),
-        "calendar": IrrigationPolicy.calendar(7, 20),
-        "sensor": IrrigationPolicy.sensor_driven(0.9),
-    }
     study = ImpactStudy(start=start, days=days)
     for plot in plots:
-        for name, policy in policies.items():
+        for name, policy in POLICIES.items():
             study.outcomes.append(_evaluate(plot, name, policy, start, days, seed))
     return study

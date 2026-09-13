@@ -263,7 +263,10 @@ def dashboard(port: int = typer.Option(8501, help="Port for the Streamlit server
                 str(port),
                 "--server.headless",
                 "true",
-            ]
+            ],
+            # From the project root, so .streamlit/config.toml - the palette and
+            # the typeface - applies wherever the command is typed.
+            cwd=get_settings().paths.root,
         )
     )
 
